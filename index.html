@@ -1,196 +1,1500 @@
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Bhalde's Biology</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nitin Bhalde — Biology & Zoology Educator</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+:root {
+  --ink: #0e1a12;
+  --forest: #173d24;
+  --moss: #2e6b3e;
+  --sage: #5f9e72;
+  --mint: #a3d9b1;
+  --parchment: #f5f0e8;
+  --sand: #e8e0d0;
+  --gold: #d4a843;
+  --amber: #e8891c;
+  --white: #ffffff;
+  --text-body: #2c3e2f;
+  --text-muted: #7a9882;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ink);
+  color: var(--parchment);
+  overflow-x: hidden;
+}
+h1,h2,h3,h4 { font-family: 'DM Serif Display', serif; }
 
-        <meta name="author" content="SoonLaunch">
-		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-        <!-- Place favicon.ico in the root directory -->
+.teacher-photo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+/* ── ANIMATED BIOLOGY CANVAS ── */
+#bio-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+#dna-canvas {
+  position: fixed;
+  right: 0; top: 0;
+  width: 140px; height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+/* Floating leaves */
+.leaf {
+  position: absolute;
+  opacity: 0;
+  animation: leafFloat linear infinite;
+}
+.leaf svg { display: block; }
+@keyframes leafFloat {
+  0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
+  5%   { opacity: 0.22; }
+  95%  { opacity: 0.12; }
+  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+}
+/* Floating animals */
+.bio-animal {
+  position: absolute;
+  opacity: 0;
+  animation: animalFloat ease-in-out infinite;
+}
+@keyframes animalFloat {
+  0%,100% { transform: translateY(0px) rotate(-2deg); opacity: 0; }
+  10%     { opacity: 1; }
+  90%     { opacity: 0.85; }
+  50%     { transform: translateY(-18px) rotate(2deg); }
+}
+/* Walking frog */
+.frog-walk {
+  position: absolute;
+  animation: frogHop linear infinite;
+}
+@keyframes frogHop {
+  0%   { transform: translateX(-80px) scaleX(1);  opacity: 0; }
+  4%   { opacity: 1; }
+  48%  { transform: translateX(45vw) scaleX(1) translateY(-6px); }
+  50%  { transform: translateX(47vw) scaleX(1) translateY(0); }
+  96%  { opacity: 0.7; }
+  100% { transform: translateX(110vw) scaleX(1);  opacity: 0; }
+}
+/* Butterfly fly-across */
+.butterfly-fly {
+  position: absolute;
+  animation: bfAcross linear infinite;
+}
+@keyframes bfAcross {
+  0%   { transform: translate(-60px, 0) rotate(-4deg); opacity: 0; }
+  5%   { opacity: 0.8; }
+  92%  { opacity: 0.6; }
+  100% { transform: translate(110vw, -30px) rotate(4deg); opacity: 0; }
+}
+.bf-wing { animation: bfFlap 0.35s ease-in-out infinite alternate; transform-origin: 50% 50%; }
+.bf-wing-r { animation-direction: alternate-reverse; }
+@keyframes bfFlap {
+  from { transform: scaleX(1) scaleY(1); }
+  to   { transform: scaleX(0.25) scaleY(0.8); }
+}
+/* Firefly dots */
+.firefly {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: #c8f08e;
+  animation: firefly ease-in-out infinite;
+  box-shadow: 0 0 5px #c8f08e;
+}
+@keyframes firefly {
+  0%,100% { opacity: 0; transform: translate(0,0); }
+  25%  { opacity: 0.8; transform: translate(9px,-14px); }
+  50%  { opacity: 0.3; transform: translate(-7px,-22px); }
+  75%  { opacity: 0.9; transform: translate(11px,-9px); }
+}
+/* Floating cells */
+.cell {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(163,217,177,0.1);
+  animation: cellDrift ease-in-out infinite;
+}
+@keyframes cellDrift {
+  0%,100% { transform: translateY(0px) scale(1); opacity: 0.05; }
+  50%      { transform: translateY(-28px) scale(1.04); opacity: 0.11; }
+}
+/* Bee waggle */
+.bee-fly {
+  position: absolute;
+  animation: beeZigzag linear infinite;
+}
+@keyframes beeZigzag {
+  0%   { transform: translate(-40px, 0px) rotate(0deg); opacity: 0; }
+  3%   { opacity: 0.9; }
+  25%  { transform: translate(25vw, -30px) rotate(-8deg); }
+  50%  { transform: translate(50vw, 15px) rotate(5deg); }
+  75%  { transform: translate(75vw, -20px) rotate(-5deg); }
+  97%  { opacity: 0.7; }
+  100% { transform: translate(110vw, 5px) rotate(0deg); opacity: 0; }
+}
+.bee-wing { animation: beeWingFlap 0.18s linear infinite alternate; transform-origin: 50% 100%; }
+@keyframes beeWingFlap {
+  from { transform: scaleY(1) skewX(-5deg); opacity: 0.7; }
+  to   { transform: scaleY(0.2) skewX(5deg); opacity: 0.4; }
+}
 
-		<!-- ========================= CSS here ========================= -->
-		<link rel="stylesheet" href="assets/css/bootstrap-4.5.0.min.css">
-        <link rel="stylesheet" href="assets/css/lineicons.css">
-		<link rel="stylesheet" href="assets/css/animate.css">
-		<link rel="stylesheet" href="assets/css/style.css">
-    </head>
-    <body>
-        <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
+/* ── NAVBAR ── */
+.navbar {
+  background: rgba(14,26,18,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(95,158,114,0.15);
+  padding: 16px 0;
+  position: sticky; top: 0; z-index: 1000;
+}
+.navbar-brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.25rem;
+  color: var(--mint) !important;
+  display: flex; align-items: center; gap: 10px;
+}
+.brand-icon {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, var(--moss), var(--sage));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+}
+.nav-link {
+  color: rgba(245,240,232,0.7) !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 8px 14px !important;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute; bottom: 4px; left: 14px; right: 14px;
+  height: 1px;
+  background: var(--sage);
+  transform: scaleX(0);
+  transition: transform 0.25s;
+}
+.nav-link:hover, .nav-link.active { color: var(--mint) !important; }
+.nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
 
-        <!-- ========================= main start ========================= -->
-        <main class="main-06">
-            <!-- header start  -->
-            <div class="header header-06">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-md-4">
-                            <a href="#" class="logo"> <img src="logo.png" alt=""></a>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="header-right text-right">
-                                <a href="#">Say hello! nitinbhalde@gmail.com</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  z-index: 1;
+  padding: 100px 0 60px;
+}
+.hero-label {
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-label::before {
+  content: '';
+  width: 32px; height: 1px; background: var(--sage);
+}
+.hero h1 {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 1.05;
+  color: var(--parchment);
+  margin-bottom: 24px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--mint);
+}
+.hero-bio {
+  font-size: 1rem; line-height: 1.8;
+  color: rgba(245,240,232,0.62);
+  max-width: 460px;
+  margin-bottom: 40px;
+}
+.btn-primary-bio {
+  background: var(--sage);
+  color: var(--ink);
+  font-weight: 600; font-size: 0.88rem;
+  padding: 14px 34px;
+  border-radius: 40px;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.25s;
+  letter-spacing: 0.03em;
+}
+.btn-primary-bio:hover {
+  background: var(--mint);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(95,158,114,0.3);
+  color: var(--ink);
+}
+.btn-ghost-bio {
+  color: var(--parchment);
+  font-weight: 500; font-size: 0.88rem;
+  padding: 13px 28px;
+  border-radius: 40px;
+  border: 1px solid rgba(245,240,232,0.2);
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 12px;
+  transition: all 0.25s;
+}
+.btn-ghost-bio:hover { border-color: var(--sage); color: var(--mint); }
+
+/* Photo + decorative ring */
+.hero-photo-wrap {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.photo-ring {
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  border: 1px solid rgba(95,158,114,0.2);
+  position: absolute;
+  animation: ringPulse 4s ease-in-out infinite;
+}
+.photo-ring-2 {
+  width: 300px; height: 300px;
+  animation-delay: -2s;
+}
+@keyframes ringPulse {
+  0%,100% { transform: scale(1); opacity: 0.15; }
+  50% { transform: scale(1.04); opacity: 0.3; }
+}
+.photo-frame {
+  width: 260px; height: 300px;
+  background: rgba(46,107,62,0.12);
+  border: 1.5px solid rgba(95,158,114,0.25);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.78rem; text-align: center;
+  position: relative; z-index: 1;
+  gap: 8px;
+}
+.photo-frame i { font-size: 3rem; opacity: 0.4; }
+
+/* Stat pills */
+.stat-pill {
+  background: rgba(46,107,62,0.25);
+  border: 1px solid rgba(95,158,114,0.2);
+  border-radius: 40px;
+  padding: 10px 20px;
+  display: inline-flex; align-items: center; gap: 10px;
+  margin: 6px;
+}
+.stat-pill-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  color: var(--mint);
+  line-height: 1;
+}
+.stat-pill-label {
+  font-size: 0.73rem; color: rgba(245,240,232,0.5);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+
+/* ── SECTION COMMONS ── */
+.sec { padding: 96px 0; position: relative; z-index: 1; }
+.sec-sm { padding: 64px 0; position: relative; z-index: 1; }
+.sec-tag {
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--sage);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.sec-tag::before { content: ''; width: 24px; height: 1px; background: var(--sage); }
+.sec-title { font-size: clamp(1.9rem, 3.5vw, 3rem); color: var(--parchment); line-height: 1.15; margin-bottom: 20px; }
+.sec-lead { font-size: 0.97rem; color: rgba(245,240,232,0.55); line-height: 1.8; max-width: 520px; }
+
+/* Light section */
+.sec-light { background: var(--parchment); }
+.sec-light .sec-tag { color: var(--moss); }
+.sec-light .sec-tag::before { background: var(--moss); }
+.sec-light .sec-title { color: var(--ink); }
+.sec-light .sec-lead { color: var(--text-body); opacity: 0.7; }
+.sec-light p, .sec-light li { color: var(--text-body); }
+
+/* Mid section */
+.sec-mid { background: var(--forest); }
+
+/* ── PORTFOLIO / ABOUT ── */
+.timeline-item {
+  display: flex; gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(95,158,114,0.1);
+}
+.timeline-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--sage);
+  margin-top: 6px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px rgba(95,158,114,0.15);
+}
+.timeline-year {
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--sage);
+  letter-spacing: 0.08em;
+  min-width: 50px;
+  padding-top: 2px;
+}
+.timeline-title { font-size: 0.95rem; font-weight: 600; color: var(--parchment); margin-bottom: 4px; }
+.timeline-sub { font-size: 0.82rem; color: rgba(245,240,232,0.5); line-height: 1.6; }
+
+/* Skill bars */
+.skill-row { margin-bottom: 20px; }
+.skill-label { font-size: 0.82rem; display: flex; justify-content: space-between; color: rgba(245,240,232,0.75); margin-bottom: 7px; }
+.skill-track {
+  height: 4px;
+  background: rgba(245,240,232,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.skill-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--moss), var(--mint));
+  animation: fillBar 1.4s ease-out forwards;
+  transform-origin: left;
+}
+@keyframes fillBar {
+  from { width: 0; }
+}
+
+/* ── SUBJECT CARDS ── */
+.subj-card {
+  background: rgba(46,107,62,0.1);
+  border: 1px solid rgba(95,158,114,0.15);
+  border-radius: 16px;
+  padding: 32px 26px;
+  height: 100%;
+  transition: all 0.3s;
+  cursor: default;
+}
+.subj-card:hover {
+  background: rgba(46,107,62,0.22);
+  border-color: rgba(95,158,114,0.4);
+  transform: translateY(-6px);
+}
+.subj-emoji { font-size: 2.4rem; margin-bottom: 18px; display: block; }
+.subj-card h4 { font-size: 1.15rem; color: var(--parchment); margin-bottom: 10px; }
+.subj-card p { font-size: 0.85rem; color: rgba(245,240,232,0.55); line-height: 1.75; margin-bottom: 18px; }
+.subj-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 4px 12px;
+  background: rgba(95,158,114,0.15);
+  border: 1px solid rgba(95,158,114,0.25);
+  border-radius: 20px;
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--sage);
+  letter-spacing: 0.05em;
+}
+
+/* ── COACHING ── */
+.coaching-plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px; }
+.plan-card {
+  background: var(--parchment);
+  border-radius: 16px;
+  padding: 32px 26px;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.plan-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(14,26,18,0.15); }
+.plan-card.featured {
+  background: var(--forest);
+  color: var(--parchment);
+  border: 1.5px solid rgba(95,158,114,0.3);
+}
+.plan-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 4px 14px; border-radius: 20px;
+  white-space: nowrap;
+}
+.plan-icon {
+  width: 50px; height: 50px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 18px;
+}
+.plan-icon-green { background: #d1f0dc; color: var(--moss); }
+.plan-icon-dark { background: rgba(95,158,114,0.2); color: var(--mint); }
+.plan-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; margin-bottom: 6px; color: inherit; }
+.plan-card:not(.featured) .plan-name { color: var(--ink); }
+.plan-desc { font-size: 0.82rem; line-height: 1.7; margin-bottom: 20px; }
+.plan-card:not(.featured) .plan-desc { color: #5a6b5e; }
+.plan-card.featured .plan-desc { color: rgba(245,240,232,0.6); }
+.plan-fee {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.9rem;
+  color: var(--moss);
+  margin-bottom: 4px;
+}
+.plan-card.featured .plan-fee { color: var(--mint); }
+.plan-fee span { font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 400; color: var(--text-muted); }
+.plan-features { list-style: none; margin: 16px 0 0; }
+.plan-features li {
+  font-size: 0.82rem; padding: 7px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  display: flex; align-items: center; gap: 8px;
+}
+.plan-card.featured .plan-features li { border-color: rgba(255,255,255,0.07); color: rgba(245,240,232,0.72); }
+.plan-card:not(.featured) .plan-features li { color: #4a5c4e; }
+.plan-features li:last-child { border: none; }
+.feat-check { color: var(--moss); font-size: 0.75rem; }
+.plan-card.featured .feat-check { color: var(--mint); }
+.btn-enroll {
+  display: block; width: 100%; margin-top: 24px;
+  padding: 11px; border-radius: 8px;
+  font-weight: 600; font-size: 0.85rem;
+  text-align: center; text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-enroll-dark { background: var(--moss); color: white; border: none; }
+.btn-enroll-dark:hover { background: var(--forest); color: var(--mint); }
+.btn-enroll-outline { background: transparent; color: var(--sage); border: 1.5px solid var(--sage); }
+.btn-enroll-outline:hover { background: var(--sage); color: var(--ink); }
+
+/* ── SCHEDULE TABLE ── */
+.sched-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.sched-table thead th {
+  background: rgba(95,158,114,0.1);
+  color: var(--sage);
+  padding: 12px 16px;
+  text-align: left; font-weight: 600;
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em;
+  border-bottom: 1px solid rgba(95,158,114,0.15);
+}
+.sched-table tbody tr { border-bottom: 1px solid rgba(95,158,114,0.06); transition: background 0.15s; }
+.sched-table tbody tr:hover { background: rgba(95,158,114,0.06); }
+.sched-table td { padding: 13px 16px; color: rgba(245,240,232,0.72); vertical-align: middle; }
+.sched-table td strong { color: var(--parchment); }
+.badge-sched {
+  padding: 3px 10px; border-radius: 4px;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
+}
+.bs-school { background: rgba(52,152,219,0.15); color: #74b9ff; }
+.bs-coaching { background: rgba(95,158,114,0.15); color: var(--sage); }
+.bs-online { background: rgba(212,168,67,0.15); color: var(--gold); }
+
+/* ── TESTIMONIALS ── */
+.testi-card {
+  background: rgba(23,61,36,0.4);
+  border: 1px solid rgba(95,158,114,0.12);
+  border-radius: 16px;
+  padding: 30px 24px;
+  height: 100%;
+}
+.testi-quote { font-size: 2.5rem; color: var(--sage); opacity: 0.3; line-height: 1; font-family: 'DM Serif Display', serif; margin-bottom: -10px; }
+.testi-text { font-size: 0.88rem; color: rgba(245,240,232,0.65); line-height: 1.8; margin-bottom: 20px; }
+.testi-name { font-weight: 600; font-size: 0.88rem; color: var(--parchment); }
+.testi-role { font-size: 0.75rem; color: var(--text-muted); }
+.testi-stars { color: var(--gold); font-size: 0.75rem; margin-bottom: 10px; }
+.testi-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(95,158,114,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; color: var(--sage);
+  margin-right: 12px;
+}
+
+/* ── ACHIEVEMENT GRID ── */
+.ach-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3.5rem; color: var(--mint); line-height: 1;
+}
+.ach-label { font-size: 0.82rem; color: rgba(245,240,232,0.5); margin-top: 6px; line-height: 1.5; }
+.ach-divider { width: 1px; background: rgba(95,158,114,0.15); align-self: stretch; }
+
+/* ── CONTACT ── */
+.contact-wrap {
+  background: var(--forest);
+  border: 1px solid rgba(95,158,114,0.15);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.contact-info-panel {
+  background: var(--ink);
+  padding: 48px 40px;
+}
+.contact-form-panel { padding: 48px 40px; }
+.cinfo-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid rgba(95,158,114,0.1); }
+.cinfo-item:last-child { border: none; }
+.cinfo-ico {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: rgba(95,158,114,0.12);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--sage); font-size: 0.85rem; flex-shrink: 0;
+}
+.cinfo-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px; }
+.cinfo-val { font-size: 0.9rem; color: var(--parchment); font-weight: 500; }
+.form-field {
+  width: 100%; background: rgba(245,240,232,0.05);
+  border: 1px solid rgba(95,158,114,0.15);
+  border-radius: 8px; padding: 12px 16px;
+  color: var(--parchment); font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.form-field::placeholder { color: rgba(245,240,232,0.25); }
+.form-field:focus { border-color: var(--sage); background: rgba(95,158,114,0.06); }
+.form-field option { background: var(--forest); color: var(--parchment); }
+.form-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); display: block; margin-bottom: 6px; }
+.btn-send {
+  background: var(--sage); color: var(--ink);
+  font-weight: 700; font-size: 0.88rem;
+  padding: 14px 32px; border-radius: 8px;
+  border: none; width: 100%; cursor: pointer;
+  transition: all 0.25s;
+}
+.btn-send:hover { background: var(--mint); transform: translateY(-1px); }
+
+/* ── FOOTER ── */
+.footer {
+  background: #080f0a;
+  padding: 52px 0 24px;
+  position: relative; z-index: 1;
+  border-top: 1px solid rgba(95,158,114,0.08);
+}
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--parchment); margin-bottom: 12px; }
+.footer-brand span { color: var(--mint); }
+.footer-text { font-size: 0.82rem; color: rgba(245,240,232,0.4); line-height: 1.7; max-width: 280px; }
+.footer-heading { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(245,240,232,0.35); margin-bottom: 16px; }
+.footer-link { display: block; color: rgba(245,240,232,0.45); text-decoration: none; font-size: 0.83rem; margin-bottom: 9px; transition: color 0.2s; }
+.footer-link:hover { color: var(--sage); }
+.footer-bottom { border-top: 1px solid rgba(245,240,232,0.06); margin-top: 40px; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 0.78rem; color: rgba(245,240,232,0.25); }
+.social-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(245,240,232,0.05); border: 1px solid rgba(245,240,232,0.1); display: inline-flex; align-items: center; justify-content: center; color: rgba(245,240,232,0.4); font-size: 0.8rem; text-decoration: none; margin-right: 8px; transition: all 0.2s; }
+.social-btn:hover { background: var(--sage); border-color: var(--sage); color: var(--ink); }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2.4rem; }
+  .photo-frame { width: 200px; height: 240px; }
+  .photo-ring { width: 260px; height: 260px; }
+  .photo-ring-2 { width: 210px; height: 210px; }
+  .contact-info-panel, .contact-form-panel { padding: 32px 24px; }
+  .btn-ghost-bio { margin-left: 0; margin-top: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── ROTATING DNA HELIX CANVAS ── -->
+<canvas id="dna-canvas" aria-hidden="true"></canvas>
+
+<!-- ── ANIMATED BIOLOGY CANVAS ── -->
+<div id="bio-canvas" aria-hidden="true">
+  <!-- Cells -->
+  <div class="cell" style="width:180px;height:180px;left:8%;top:20%;animation-duration:8s;animation-delay:0s;"></div>
+  <div class="cell" style="width:120px;height:120px;left:80%;top:55%;animation-duration:10s;animation-delay:-3s;"></div>
+  <div class="cell" style="width:240px;height:240px;left:60%;top:10%;animation-duration:12s;animation-delay:-6s;"></div>
+  <div class="cell" style="width:90px;height:90px;left:35%;top:75%;animation-duration:7s;animation-delay:-1s;"></div>
+
+  <!-- SVG Frog — hops across bottom area -->
+  <div class="frog-walk" style="bottom:8%;animation-duration:28s;animation-delay:-5s;">
+    <svg width="52" height="44" viewBox="0 0 52 44" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.55">
+      <!-- Body -->
+      <ellipse cx="26" cy="26" rx="16" ry="13" fill="#3a8c52"/>
+      <!-- Head -->
+      <ellipse cx="26" cy="14" rx="12" ry="9" fill="#4aab62"/>
+      <!-- Eyes bulge -->
+      <circle cx="18" cy="9" r="5" fill="#4aab62"/>
+      <circle cx="34" cy="9" r="5" fill="#4aab62"/>
+      <circle cx="18" cy="8.5" r="3" fill="#1a1a1a"/>
+      <circle cx="34" cy="8.5" r="3" fill="#1a1a1a"/>
+      <circle cx="18.8" cy="7.8" r="1" fill="white"/>
+      <circle cx="34.8" cy="7.8" r="1" fill="white"/>
+      <!-- Mouth -->
+      <path d="M20 17 Q26 21 32 17" stroke="#1a4a25" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <!-- Belly -->
+      <ellipse cx="26" cy="29" rx="10" ry="7" fill="#6ed48a" opacity="0.6"/>
+      <!-- Front legs -->
+      <path d="M10 30 Q6 35 4 38" stroke="#3a8c52" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path d="M42 30 Q46 35 48 38" stroke="#3a8c52" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <!-- Feet front -->
+      <circle cx="4" cy="39" r="3" fill="#2e7042"/>
+      <circle cx="48" cy="39" r="3" fill="#2e7042"/>
+      <!-- Hind legs -->
+      <path d="M14 36 Q8 42 5 43" stroke="#3a8c52" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <path d="M38 36 Q44 42 47 43" stroke="#3a8c52" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <!-- Spots -->
+      <circle cx="22" cy="27" r="2.5" fill="#2e7042" opacity="0.5"/>
+      <circle cx="30" cy="31" r="2" fill="#2e7042" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <!-- SVG Bee — zigzags across mid-section -->
+  <div class="bee-fly" style="top:35%;animation-duration:20s;animation-delay:-8s;">
+    <svg width="38" height="28" viewBox="0 0 38 28" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.7">
+      <!-- Wings -->
+      <ellipse class="bee-wing" cx="14" cy="7" rx="10" ry="5" fill="#c8f0ff" opacity="0.65"/>
+      <ellipse class="bee-wing bee-wing-r" cx="24" cy="7" rx="10" ry="5" fill="#c8f0ff" opacity="0.65"/>
+      <ellipse class="bee-wing" cx="12" cy="13" rx="7" ry="3.5" fill="#c8f0ff" opacity="0.5"/>
+      <ellipse class="bee-wing bee-wing-r" cx="26" cy="13" rx="7" ry="3.5" fill="#c8f0ff" opacity="0.5"/>
+      <!-- Body -->
+      <ellipse cx="19" cy="18" rx="10" ry="7" fill="#f5c518"/>
+      <!-- Stripes -->
+      <rect x="10" y="16" width="18" height="3" rx="1.5" fill="#1a1a1a" opacity="0.7"/>
+      <rect x="11" y="21" width="16" height="2.5" rx="1.2" fill="#1a1a1a" opacity="0.7"/>
+      <!-- Head -->
+      <circle cx="19" cy="11" r="5" fill="#f5c518"/>
+      <!-- Eyes -->
+      <circle cx="17" cy="10" r="1.5" fill="#1a1a1a"/>
+      <circle cx="21" cy="10" r="1.5" fill="#1a1a1a"/>
+      <!-- Antennae -->
+      <path d="M17 6 Q14 2 12 1" stroke="#1a1a1a" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <path d="M21 6 Q24 2 26 1" stroke="#1a1a1a" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <circle cx="12" cy="1" r="1.5" fill="#f5c518"/>
+      <circle cx="26" cy="1" r="1.5" fill="#f5c518"/>
+      <!-- Stinger -->
+      <path d="M19 25 L19 28" stroke="#c8841a" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- SVG Butterfly 1 -->
+  <div class="butterfly-fly" style="top:55%;animation-duration:26s;animation-delay:-12s;">
+    <svg width="44" height="34" viewBox="0 0 44 34" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.65">
+      <g class="bf-wing">
+        <path d="M22 17 C16 8, 4 4, 2 12 C0 20, 10 26, 22 17Z" fill="#a3d9b1"/>
+        <path d="M22 17 C14 18, 6 28, 10 32 C14 36, 20 28, 22 17Z" fill="#7ec8a0" opacity="0.8"/>
+        <circle cx="10" cy="14" r="3" fill="white" opacity="0.25"/>
+      </g>
+      <g class="bf-wing bf-wing-r">
+        <path d="M22 17 C28 8, 40 4, 42 12 C44 20, 34 26, 22 17Z" fill="#a3d9b1"/>
+        <path d="M22 17 C30 18, 38 28, 34 32 C30 36, 24 28, 22 17Z" fill="#7ec8a0" opacity="0.8"/>
+        <circle cx="34" cy="14" r="3" fill="white" opacity="0.25"/>
+      </g>
+      <ellipse cx="22" cy="17" rx="2" ry="9" fill="#2c4a34"/>
+      <path d="M21 8 Q18 3 15 1" stroke="#2c4a34" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <path d="M23 8 Q26 3 29 1" stroke="#2c4a34" stroke-width="1" stroke-linecap="round" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- SVG Butterfly 2 (smaller, different color) -->
+  <div class="butterfly-fly" style="top:22%;animation-duration:32s;animation-delay:-20s;">
+    <svg width="34" height="26" viewBox="0 0 44 34" fill="none" opacity="0.5">
+      <g class="bf-wing">
+        <path d="M22 17 C16 8, 4 4, 2 12 C0 20, 10 26, 22 17Z" fill="#fcd34d"/>
+        <path d="M22 17 C14 18, 6 28, 10 32 C14 36, 20 28, 22 17Z" fill="#f5a623" opacity="0.8"/>
+      </g>
+      <g class="bf-wing bf-wing-r">
+        <path d="M22 17 C28 8, 40 4, 42 12 C44 20, 34 26, 22 17Z" fill="#fcd34d"/>
+        <path d="M22 17 C30 18, 38 28, 34 32 C30 36, 24 28, 22 17Z" fill="#f5a623" opacity="0.8"/>
+      </g>
+      <ellipse cx="22" cy="17" rx="1.8" ry="8" fill="#5a3a00"/>
+    </svg>
+  </div>
+
+  <!-- SVG Snail — drifts slowly left to right near bottom -->
+  <div class="bio-animal" style="right:12%;top:70%;animation-duration:6s;animation-delay:-2s;">
+    <svg width="48" height="36" viewBox="0 0 48 36" fill="none" opacity="0.5">
+      <!-- Shell spiral -->
+      <circle cx="30" cy="16" r="14" fill="#c8a870"/>
+      <circle cx="30" cy="16" r="10" fill="#b8944e"/>
+      <circle cx="30" cy="16" r="6" fill="#c8a870"/>
+      <circle cx="30" cy="16" r="3" fill="#b8944e"/>
+      <!-- Body -->
+      <ellipse cx="20" cy="28" rx="18" ry="7" fill="#8ab86e"/>
+      <!-- Head -->
+      <ellipse cx="6" cy="25" rx="6" ry="5" fill="#8ab86e"/>
+      <!-- Antennae with eyes -->
+      <line x1="4" y1="20" x2="2" y2="13" stroke="#5a8a48" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="7" y1="20" x2="8" y2="13" stroke="#5a8a48" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="2" cy="12" r="2" fill="#1a1a1a"/>
+      <circle cx="8" cy="12" r="2" fill="#1a1a1a"/>
+      <circle cx="2.6" cy="11.5" r="0.7" fill="white"/>
+      <circle cx="8.6" cy="11.5" r="0.7" fill="white"/>
+    </svg>
+  </div>
+
+  <!-- SVG Dragonfly — hovers near top left -->
+  <div class="bio-animal" style="left:5%;top:38%;animation-duration:4.5s;animation-delay:-1s;">
+    <svg width="50" height="30" viewBox="0 0 50 30" fill="none" opacity="0.45">
+      <!-- Wings -->
+      <ellipse cx="20" cy="10" rx="14" ry="5" fill="#a3d9f0" opacity="0.7"/>
+      <ellipse cx="30" cy="10" rx="14" ry="5" fill="#a3d9f0" opacity="0.7"/>
+      <ellipse cx="18" cy="18" rx="11" ry="4" fill="#a3d9f0" opacity="0.55"/>
+      <ellipse cx="32" cy="18" rx="11" ry="4" fill="#a3d9f0" opacity="0.55"/>
+      <!-- Body segments -->
+      <ellipse cx="25" cy="13" rx="3.5" ry="3" fill="#2e8aaa"/>
+      <rect x="22.5" y="14" width="5" height="4" rx="1" fill="#2e8aaa"/>
+      <ellipse cx="25" cy="20" rx="2.5" ry="3" fill="#3aa0c0"/>
+      <ellipse cx="25" cy="25" rx="2" ry="3" fill="#2e8aaa"/>
+      <ellipse cx="25" cy="29" rx="1.5" ry="2" fill="#1e6a88"/>
+      <!-- Head -->
+      <circle cx="25" cy="10" r="3.5" fill="#1e6a88"/>
+      <circle cx="23" cy="9" r="1.5" fill="#c8f0a0"/>
+      <circle cx="27" cy="9" r="1.5" fill="#c8f0a0"/>
+    </svg>
+  </div>
+
+  <!-- Floating leaves (generated by JS) -->
+</div>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <div class="brand-icon">🌿</div>
+      Nitin Bhalde
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <i class="fas fa-bars" style="color:var(--sage)"></i>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="nav">
+      <ul class="navbar-nav gap-1">
+        <li class="nav-item"><a class="nav-link active" href="#hero">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">Portfolio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#subjects">Subjects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#coaching">Coaching</a></li>
+        <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <div class="hero-label">Biology &amp; Zoology Educator</div>
+        <h1>Teaching Life<br>Through the<br><em>Science of Nature</em></h1>
+        <p class="hero-bio">32+ years nurturing curiosity in Class 11 &amp; 12 students. School teacher by day, coaching mentor always — making complex biology simple, visual, and memorable.</p>
+        <div>
+          <a href="#contact" class="btn-primary-bio">Contact Now</a>
+          <a href="#about" class="btn-ghost-bio">My Portfolio</a>
+        </div>
+        <div class="mt-5 d-flex flex-wrap">
+          <div class="stat-pill">
+            <div>
+              <div class="stat-pill-num">32+</div>
+              <div class="stat-pill-label">Years<br>Teaching</div>
             </div>
-            <!-- header end  -->
-            <!-- ========================= main-wrapper start ========================= -->
-            <div class="main-wrapper demo-06">
-                <!-- hero-area start  -->
-                <div class="hero-area">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <!-- heading start  -->
-                                <div class="heading">
-                                    <h1 class="text-white wow fadeInUp" data-wow-delay=".2s">We Are <br> Coming Soon</h1>
-                                </div>
-                                <!-- heading end  -->
-                            </div>
-                            <div class="col-xl-7 col-lg-7">
-                                <!-- countdown start  -->
-                                <div class="wow fadeInRight" data-wow-delay=".4s" data-countdown="2026/2/15"></div>
-                                <!-- countdown end  -->
-                            </div>
-                            <div class="col-xl-5 col-lg-5">
-                                <!-- desc strat  -->
-                                <p class="wow fadeInLeft" data-wow-delay=".4s">We're strong believers that the best solutions come from gathering new insights and pushing conventional boundaries.</p>
-                                <!-- desc end  -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- hero-area end  -->
-                <!-- team-area start  -->
-                <div class="team-area">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-9">
-                                <!-- section-title start  -->
-                                <div class="section-title">
-                                    <h1 class="wow fadeInUp" data-wow-delay=".2s">Our Information</h1>
-                                    <h2 class="wow fadeInUp" data-wow-delay=".4s">Nurturing young minds, just like cells grow into life <br class="d-none d-lg-block">
-                                        — through biology, guidance, and technology.</h2>
-                                </div>
-                                <!-- section-title end  -->
-                            </div>
-                        </div>
-                        <!-- team-wrapper start  -->
-                        <div class="team-wrapper">
+          </div>
+          <div class="stat-pill">
+            <div>
+              <div class="stat-pill-num">4,200+</div>
+              <div class="stat-pill-label">Students<br>Guided</div>
+            </div>
+          </div>
+          <!-- <div class="stat-pill">
+            <div>
+              <div class="stat-pill-num">40+</div>
+              <div class="stat-pill-label">NEET<br>Qualifiers</div>
+            </div>
+          </div> -->
+          <div class="stat-pill">
+            <div>
+              <div class="stat-pill-num">98%</div>
+              <div class="stat-pill-label">Board<br>Pass Rate</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="hero-photo-wrap">
+          <div class="photo-ring"></div>
+          <div class="photo-ring photo-ring-2"></div>
+          <div class="photo-frame">
+            <img src="images/pic.jpeg"
+                 alt="Nitin Bhalde"
+                 class="teacher-photo">
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                            <!-- OWNER : BIOLOGY PROFESSOR -->
-                            <div class="team-item wow fadeInUp" data-wow-delay=".2s">
-                                <div class="team-img">
-                                    <img src="img-1.jpg" alt="Founder & Biology Professor">
-                                </div>
-                                <div class="team-info">
-                                    <h4>Nitin Bhalde</h4>
-                                    <h4>Founder & Mentor</h4>
-                                    <p>
-                                        Biology Professor <br>
-                                        (11th & 12th – Coaching & Guidance)
-                                    </p>
-                                </div>
-                            </div>
-                        
-                            <!-- DEVELOPER : YOU -->
-                            <div class="team-item wow fadeInUp" data-wow-delay=".4s">
-                                <div class="team-img">
-                                    <img src="mypic.jpg" alt="Software Developer">
-                                </div>
-                                <div class="team-info">
-                                    <h4>Shreyas Bhalde</h4>
-                                    <p>
-                                        Software Developer <br>
-                                        Web & Digital Branding
-                                    </p>
-                                </div>
-                            </div>
-                        
-                        </div>
-                        
-                        <!-- team-wrapper end  -->
-                    </div>
-                </div> <!-- end container  -->
-                <!-- team-area end  -->
+<!-- ── PORTFOLIO / ABOUT ── -->
+<section class="sec sec-mid" id="about">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5">
+        <div class="sec-tag">Professional Portfolio</div>
+        <h2 class="sec-title">A Career Devoted to Life Sciences</h2>
+        <p class="sec-lead mb-5">Two decades shaping young scientific minds — from school corridors to coaching classrooms.</p>
+
+        <!-- Skill Bars -->
+        <div class="skill-row">
+          <div class="skill-label"><span>Zoology &amp; Animal Biology</span><span>96%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:96%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Botany &amp; Plant Science</span><span>90%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>Genetics &amp; Molecular Biology</span><span>88%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>NEET Exam Strategy</span><span>94%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:94%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label"><span>CBSE Curriculum Mastery</span><span>98%</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:98%"></div></div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <!-- Timeline -->
+        <div class="timeline-item" style="padding-top:0">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-year">Present</div>
+          </div>
+          <div>
+            <div class="timeline-title">Biology &amp; Zoology Teacher — [School Name]</div>
+            <div class="timeline-sub">Teaching Class 11 &amp; 12 Biology in the school curriculum. Responsible for lab sessions, board exam preparation, and student mentorship.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-year">[Year]</div>
+          </div>
+          <div>
+            <div class="timeline-title">Founded Personal Coaching Academy</div>
+            <div class="timeline-sub">Launched independent biology coaching batches for CBSE and NEET students. Now running 4 active batches with 80+ students.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-year">[Year]</div>
+          </div>
+          <div>
+            <div class="timeline-title">Best Teacher Award — [Organisation]</div>
+            <div class="timeline-sub">Recognised for exceptional contribution to science education and student outcomes in board examinations.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-year">[Year]</div>
+          </div>
+          <div>
+            <div class="timeline-title">M.Sc. Zoology — [University]</div>
+            <div class="timeline-sub">Post-graduate specialisation in Zoology with research focus on [area]. Followed by B.Ed. in Science Education.</div>
+          </div>
+        </div>
+        <div class="timeline-item" style="border:none">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-year">[Year]</div>
+          </div>
+          <div>
+            <div class="timeline-title">B.Sc. Biology (Hons.) — [University]</div>
+            <div class="timeline-sub">Foundation in all core branches: Botany, Zoology, and Biochemistry. Gold medalist / [Achievement].</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SUBJECTS ── -->
+<section class="sec" id="subjects">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-tag" style="justify-content:center">What I Teach</div>
+      <h2 class="sec-title">Subjects &amp; Specialisations</h2>
+      <p class="sec-lead mx-auto text-center">Comprehensive Biology &amp; Zoology for Class 11, 12 and NEET — from cell to ecosystem.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-3">
+        <div class="subj-card">
+          <span class="subj-emoji">🌱</span>
+          <h4>Botany</h4>
+          <p>Plant morphology, physiology, reproduction, and ecology — NCERT to advanced reference level.</p>
+          <div class="subj-chips"><span class="chip">Class 11</span><span class="chip">Class 12</span><span class="chip">NEET</span></div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="subj-card">
+          <span class="subj-emoji">🦋</span>
+          <h4>Zoology</h4>
+          <p>Animal kingdom taxonomy, human systems, and evolutionary biology — with diagram-based learning.</p>
+          <div class="subj-chips"><span class="chip">Class 11</span><span class="chip">Class 12</span><span class="chip">NEET</span></div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="subj-card">
+          <span class="subj-emoji">🧬</span>
+          <h4>Genetics</h4>
+          <p>Mendelian principles, molecular genetics, chromosomal theory, and modern biotechnology concepts.</p>
+          <div class="subj-chips"><span class="chip">Class 12</span><span class="chip">NEET</span></div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="subj-card">
+          <span class="subj-emoji">❤️</span>
+          <h4>Human Physiology</h4>
+          <p>Circulatory, nervous, digestive, and endocrine systems — with clinical connections and exam focus.</p>
+          <div class="subj-chips"><span class="chip">Class 11</span><span class="chip">Class 12</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COACHING ── -->
+<section class="sec sec-light" id="coaching">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-tag" style="justify-content:center">Coaching Programmes</div>
+      <h2 class="sec-title" style="color:var(--ink)">Choose Your Batch</h2>
+      <p class="sec-lead mx-auto text-center" style="color:#5a6b5e">Affordable, focused, and results-driven. Every batch is capped for personal attention.</p>
+    </div>
+    <div class="coaching-plans">
+      <div class="plan-card">
+        <div class="plan-icon plan-icon-green"><i class="fas fa-book-open"></i></div>
+        <div class="plan-name">CBSE Board</div>
+        <p class="plan-desc">Full Class 11 &amp; 12 Biology coverage. Board-pattern questions, weekly tests, and model papers.</p>
+        <div class="plan-fee">₹[Amt] <span>/ month</span></div>
+        <ul class="plan-features">
+          <li><i class="fas fa-check feat-check"></i>Complete NCERT coverage</li>
+          <li><i class="fas fa-check feat-check"></i>Chapter-wise mock tests</li>
+          <li><i class="fas fa-check feat-check"></i>Printed notes provided</li>
+          <li><i class="fas fa-check feat-check"></i>Parent progress reports</li>
+          <li><i class="fas fa-check feat-check"></i>Doubt clearing sessions</li>
+        </ul>
+        <a href="#contact" class="btn-enroll btn-enroll-dark">Enquire Now</a>
+      </div>
+
+      <div class="plan-card featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-icon plan-icon-dark"><i class="fas fa-stethoscope"></i></div>
+        <div class="plan-name">NEET Foundation</div>
+        <p class="plan-desc">Intensive Biology prep for NEET aspirants. 2000+ MCQs, PYQs, and full-length mock tests.</p>
+        <div class="plan-fee">₹[Amt] <span>/ month</span></div>
+        <ul class="plan-features">
+          <li><i class="fas fa-check feat-check"></i>2000+ MCQ practice bank</li>
+          <li><i class="fas fa-check feat-check"></i>10-year PYQ analysis</li>
+          <li><i class="fas fa-check feat-check"></i>Full-length mock tests</li>
+          <li><i class="fas fa-check feat-check"></i>Rank-booster sessions</li>
+          <li><i class="fas fa-check feat-check"></i>One-on-one doubt clearing</li>
+        </ul>
+        <a href="#contact" class="btn-enroll btn-enroll-outline">Enquire Now</a>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-icon plan-icon-green"><i class="fas fa-laptop"></i></div>
+        <div class="plan-name">Online Batch</div>
+        <p class="plan-desc">Live classes via Zoom/Google Meet. Recorded sessions, PDF notes, WhatsApp doubt support.</p>
+        <div class="plan-fee">₹[Amt] <span>/ month</span></div>
+        <ul class="plan-features">
+          <li><i class="fas fa-check feat-check"></i>Live interactive classes</li>
+          <li><i class="fas fa-check feat-check"></i>Session recordings provided</li>
+          <li><i class="fas fa-check feat-check"></i>Digital notes &amp; PDFs</li>
+          <li><i class="fas fa-check feat-check"></i>WhatsApp doubt support</li>
+          <li><i class="fas fa-check feat-check"></i>Online test portal</li>
+        </ul>
+        <a href="#contact" class="btn-enroll btn-enroll-dark">Enquire Now</a>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-icon plan-icon-green"><i class="fas fa-user"></i></div>
+        <div class="plan-name">1-on-1 Tuition</div>
+        <p class="plan-desc">Personalised sessions at flexible timings. Customised study plans for individual growth.</p>
+        <div class="plan-fee">₹[Amt] <span>/ hour</span></div>
+        <ul class="plan-features">
+          <li><i class="fas fa-check feat-check"></i>Fully personalised plan</li>
+          <li><i class="fas fa-check feat-check"></i>Flexible scheduling</li>
+          <li><i class="fas fa-check feat-check"></i>Home visits available</li>
+          <li><i class="fas fa-check feat-check"></i>Concept-to-confidence focus</li>
+          <li><i class="fas fa-check feat-check"></i>Exam stress management</li>
+        </ul>
+        <a href="#contact" class="btn-enroll btn-enroll-dark">Enquire Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ACHIEVEMENTS ── -->
+<section class="sec-sm" id="achievements">
+  <div class="container">
+    <div class="row text-center gy-4">
+      <div class="col-6 col-md-3">
+        <div class="ach-num">15+</div>
+        <div class="ach-label">Years of dedicated<br>Biology teaching</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="ach-num">1,200+</div>
+        <div class="ach-label">Students mentored<br>across all batches</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="ach-num">40+</div>
+        <div class="ach-label">NEET qualifiers<br>2019 – 2024</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="ach-num">98%</div>
+        <div class="ach-label">Consistent CBSE<br>board pass rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SCHEDULE ── -->
+<section class="sec sec-mid" id="schedule">
+  <div class="container">
+    <div class="row align-items-end mb-4">
+      <div class="col-lg-6">
+        <div class="sec-tag">Weekly Timetable</div>
+        <h2 class="sec-title">Class Schedule</h2>
+      </div>
+      <div class="col-lg-6 text-lg-end">
+        <p style="font-size:0.82rem; color:var(--text-muted);">* Timings may vary during exam season</p>
+      </div>
+    </div>
+    <div style="border-radius:12px; overflow:hidden; border:1px solid rgba(95,158,114,0.12);">
+      <table class="sched-table">
+        <thead>
+          <tr><th>Day</th><th>Time</th><th>Subject / Topic</th><th>Class</th><th>Type</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Monday</strong></td><td>7:00 – 8:30 AM</td><td>Botany — Plant Physiology</td><td>Class 11</td><td><span class="badge-sched bs-coaching">Coaching</span></td></tr>
+          <tr><td></td><td>10:00 AM – 11:30</td><td>Biology (School)</td><td>Class 12</td><td><span class="badge-sched bs-school">School</span></td></tr>
+          <tr><td><strong>Tuesday</strong></td><td>7:00 – 8:30 AM</td><td>NEET — Zoology</td><td>11 &amp; 12</td><td><span class="badge-sched bs-coaching">Coaching</span></td></tr>
+          <tr><td></td><td>6:00 – 7:30 PM</td><td>Online Biology Batch</td><td>Class 12</td><td><span class="badge-sched bs-online">Online</span></td></tr>
+          <tr><td><strong>Wednesday</strong></td><td>7:00 – 8:30 AM</td><td>Genetics &amp; Evolution</td><td>Class 12</td><td><span class="badge-sched bs-coaching">Coaching</span></td></tr>
+          <tr><td><strong>Thursday</strong></td><td>7:00 – 8:30 AM</td><td>Human Physiology</td><td>Class 11</td><td><span class="badge-sched bs-coaching">Coaching</span></td></tr>
+          <tr><td></td><td>6:00 – 7:30 PM</td><td>Online NEET Batch</td><td>11 &amp; 12</td><td><span class="badge-sched bs-online">Online</span></td></tr>
+          <tr><td><strong>Saturday</strong></td><td>8:00 – 11:00 AM</td><td>Weekly Test + Doubt Session</td><td>All Batches</td><td><span class="badge-sched bs-coaching">Coaching</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="sec" id="testimonials">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-tag" style="justify-content:center">Student Voices</div>
+      <h2 class="sec-title">What Students Say</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">Sir explained Human Physiology so clearly I could visualise every process. Scored 95 in Biology boards — something I never imagined possible.</p>
+          <div class="d-flex align-items-center">
+            <div class="testi-avatar"><i class="fas fa-user"></i></div>
+            <div>
+              <div class="testi-name">Priya Sharma</div>
+              <div class="testi-role">Class 12 CBSE · 95/100 in Biology</div>
             </div>
-            <!-- ========================= main-wrapper end ========================= -->
-            <!-- footer start  -->
-            <div class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="copyright wow fadeInLeft" data-wow-delay=".2s">
-                                <p>© 2026 • Owner <a href="#" rel="nofollow">Nitin Bhalde</a></p>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="credit wow fadeInRight" data-wow-delay=".4s">
-                                <p>Designed and Developed by <a rel="nofollow" href="https://shreyasbhalde.in">Shreyas Bhalde</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">Cleared NEET on the first attempt after joining the coaching batch. The MCQ practice and personal attention made all the difference.</p>
+          <div class="d-flex align-items-center">
+            <div class="testi-avatar"><i class="fas fa-user"></i></div>
+            <div>
+              <div class="testi-name">Arjun Patel</div>
+              <div class="testi-role">NEET Qualifier 2024 · MBBS aspirant</div>
             </div>
-            <!-- footer end  -->
-        </main>
-        <!-- ========================= main end ========================= -->
-        
-		<!-- ========================= JS here ========================= -->
-		<script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
-        <script src="assets/js/vendor/jquery-3.5.1.min.js"></script>
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/bootstrap-4.5.0.min.js"></script>
-        <script src="assets/js/wow.min.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-            
-                const countdownElements = document.querySelectorAll("[data-countdown]");
-            
-                countdownElements.forEach(function (el) {
-                    const targetDate = new Date(el.getAttribute("data-countdown")).getTime();
-            
-                    function updateCountdown() {
-                        const now = new Date().getTime();
-                        const diff = targetDate - now;
-            
-                        if (diff <= 0) {
-                            el.innerHTML = "<h2 class='text-white'>We Are Live!</h2>";
-                            return;
-                        }
-            
-                        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                        const minutes = Math.floor((diff / (1000 * 60)) % 60);
-                        const seconds = Math.floor((diff / 1000) % 60);
-            
-                        el.innerHTML = `
-                            <div style="display:flex;gap:30px;color:white">
-                                <div><h2>${days}</h2><span>Days</span></div>
-                                <div><h2>${hours}</h2><span>Hours</span></div>
-                                <div><h2>${minutes}</h2><span>Minutes</span></div>
-                                <div><h2>${seconds}</h2><span>Seconds</span></div>
-                            </div>
-                        `;
-                    }
-            
-                    updateCountdown();
-                    setInterval(updateCountdown, 1000);
-                });
-            
-                if (typeof WOW === "function") {
-                    new WOW().init();
-                }
-            });
-            </script>
-            
-    </body>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">Even the most complex Genetics topics felt simple when Sir drew them out step by step. Truly one of a kind teaching style.</p>
+          <div class="d-flex align-items-center">
+            <div class="testi-avatar"><i class="fas fa-user"></i></div>
+            <div>
+              <div class="testi-name">Sneha Verma</div>
+              <div class="testi-role">Class 12 · School Topper in Biology</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="sec" id="contact">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-tag" style="justify-content:center">Get In Touch</div>
+      <h2 class="sec-title">Admissions &amp; Enquiries</h2>
+    </div>
+    <div class="contact-wrap">
+      <div class="row g-0">
+        <div class="col-lg-5">
+          <div class="contact-info-panel">
+            <h4 style="font-size:1.3rem; margin-bottom:8px; color:var(--parchment)">Contact Details</h4>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:28px;">Reach out for batch admissions, fee details, or any academic queries.</p>
+            <div class="cinfo-item">
+              <div class="cinfo-ico"><i class="fas fa-phone"></i></div>
+              <div>
+                <div class="cinfo-label">Phone / WhatsApp</div>
+                <div class="cinfo-val">+91 9827673396</div>
+              </div>
+            </div>
+            <div class="cinfo-item">
+              <div class="cinfo-ico"><i class="fas fa-envelope"></i></div>
+              <div>
+                <div class="cinfo-label">Email</div>
+                <div class="cinfo-val">nitinbhalde@gmail.com</div>
+              </div>
+            </div>
+            <div class="cinfo-item">
+              <div class="cinfo-ico"><i class="fas fa-school"></i></div>
+              <div>
+                <div class="cinfo-label">School</div>
+                <div class="cinfo-val">Seva Sadan Hr. Secondary School, Burhanpur</div>
+              </div>
+            </div>
+            <div class="cinfo-item">
+              <div class="cinfo-ico"><i class="fas fa-school"></i></div>
+              <div>
+                <div class="cinfo-label">College</div>
+                <div class="cinfo-val">Seva Sadan Mahavidyalaya, Burhanpur</div>
+              </div>
+            </div>
+            <div class="cinfo-item">
+              <div class="cinfo-ico"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <div class="cinfo-label">Coaching Centre</div>
+                <div class="cinfo-val">Near Jain Mandir, Burhanpur</div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+              <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+              <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="contact-form-panel">
+            <form action="https://api.web3forms.com/submit" method="POST">
+              <input type="hidden" name="access_key" value="cfc9bd1d-a8f5-43b2-bcf4-d08b5b742ae8">
+              <input type="hidden"
+       name="redirect"
+       value="https://web3forms.com/success">
+            <h4 style="font-size:1.3rem; margin-bottom:24px; color:var(--parchment)">Send an Enquiry</h4>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Student Name</label>
+                <input  name="name" type="text" class="form-field" placeholder="Full name">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone Number</label>
+                <input  name="phone" type="tel" class="form-field" placeholder="+91 XXXXX XXXXX">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Class</label>
+                <select name="class" class="form-field">
+                  <option>Select Class</option>
+                  <option>Class 11</option>
+                  <option>Class 12</option>
+                  <option>NEET Repeater</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Interested Batch</label>
+                <select name="batch" class="form-field">
+                  <option>Select Batch</option>
+                  <option>MP Board Batch</option>
+                  <option>CBSE Board Batch</option>
+                  <option>NEET Foundation</option>
+                  <option>Online Batch</option>
+                  <option>One-on-One Tuition</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Message</label>
+                <textarea name="message" class="form-field" rows="4" placeholder="Any specific questions or requirements..."></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-send">Send Enquiry &nbsp;<i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="footer-brand">🌿 Bio<span>Portfolio</span></div>
+        <p class="footer-text">Making Biology and Zoology accessible, visual, and exam-ready for every student in Class 11 &amp; 12.</p>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">Navigate</div>
+        <a href="#about" class="footer-link">Portfolio</a>
+        <a href="#subjects" class="footer-link">Subjects</a>
+        <a href="#coaching" class="footer-link">Coaching</a>
+        <a href="#schedule" class="footer-link">Schedule</a>
+        <a href="#contact" class="footer-link">Contact</a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="footer-heading">Subjects</div>
+        <a href="#" class="footer-link">Botany</a>
+        <a href="#" class="footer-link">Zoology</a>
+        <a href="#" class="footer-link">Genetics &amp; Evolution</a>
+        <a href="#" class="footer-link">Human Physiology</a>
+        <a href="#" class="footer-link">NEET Biology</a>
+      </div>
+      <div class="col-lg-3">
+        <div class="footer-heading">Batches</div>
+        <a href="#" class="footer-link">CBSE Board Batch</a>
+        <a href="#" class="footer-link">NEET Foundation</a>
+        <a href="#" class="footer-link">Online Classes</a>
+        <a href="#" class="footer-link">One-on-One Tuition</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 · Nitin Bhalde. All rights reserved.</div>
+      <div>Made with care 🌱</div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ══════════════════════════════════════════
+//  ROTATING 3D DNA HELIX — Canvas
+// ══════════════════════════════════════════
+const dnaCanvas = document.getElementById('dna-canvas');
+const ctx = dnaCanvas.getContext('2d');
+let dnaW, dnaH;
+
+function resizeDNA() {
+  dnaW = dnaCanvas.width  = 140;
+  dnaH = dnaCanvas.height = window.innerHeight;
+}
+resizeDNA();
+window.addEventListener('resize', resizeDNA);
+
+const STRAND_COLOR_A = '#5f9e72';
+const STRAND_COLOR_B = '#a3d9b1';
+const RUNG_COLOR     = 'rgba(163,217,177,0.35)';
+const BASE_PAIRS = 26;
+const HELIX_R    = 36;
+const CX         = 70;
+
+let dnaAngle = 0;
+function drawDNA() {
+  ctx.clearRect(0, 0, dnaW, dnaH);
+  const stepY = dnaH / BASE_PAIRS;
+  dnaAngle += 0.008;
+
+  // Collect all nodes for z-sorting
+  const nodes = [];
+  for (let i = 0; i < BASE_PAIRS; i++) {
+    const t = (i / BASE_PAIRS) * Math.PI * 2 * 2.5 + dnaAngle;
+    const y = (i / BASE_PAIRS) * dnaH + stepY * 0.5;
+    const xA = CX + Math.cos(t) * HELIX_R;
+    const xB = CX + Math.cos(t + Math.PI) * HELIX_R;
+    const zA = Math.sin(t);
+    const zB = Math.sin(t + Math.PI);
+    nodes.push({ i, y, xA, xB, zA, zB, t });
+  }
+
+  // Draw rungs (back ones first for depth)
+  for (const n of nodes) {
+    const mid = (n.zA + n.zB) / 2;
+    const alpha = 0.12 + 0.18 * ((mid + 1) / 2);
+    ctx.beginPath();
+    ctx.moveTo(n.xA, n.y);
+    ctx.lineTo(n.xB, n.y);
+    ctx.strokeStyle = `rgba(163,217,177,${alpha.toFixed(2)})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Draw strands
+  ctx.beginPath();
+  for (let i = 0; i < nodes.length; i++) {
+    const n = nodes[i];
+    if (i === 0) ctx.moveTo(n.xA, n.y);
+    else ctx.lineTo(n.xA, n.y);
+  }
+  const gradA = ctx.createLinearGradient(0, 0, 0, dnaH);
+  gradA.addColorStop(0,   'rgba(95,158,114,0)');
+  gradA.addColorStop(0.2, 'rgba(95,158,114,0.6)');
+  gradA.addColorStop(0.8, 'rgba(95,158,114,0.6)');
+  gradA.addColorStop(1,   'rgba(95,158,114,0)');
+  ctx.strokeStyle = gradA;
+  ctx.lineWidth = 1.8;
+  ctx.stroke();
+
+  ctx.beginPath();
+  for (let i = 0; i < nodes.length; i++) {
+    const n = nodes[i];
+    if (i === 0) ctx.moveTo(n.xB, n.y);
+    else ctx.lineTo(n.xB, n.y);
+  }
+  const gradB = ctx.createLinearGradient(0, 0, 0, dnaH);
+  gradB.addColorStop(0,   'rgba(163,217,177,0)');
+  gradB.addColorStop(0.2, 'rgba(163,217,177,0.55)');
+  gradB.addColorStop(0.8, 'rgba(163,217,177,0.55)');
+  gradB.addColorStop(1,   'rgba(163,217,177,0)');
+  ctx.strokeStyle = gradB;
+  ctx.lineWidth = 1.8;
+  ctx.stroke();
+
+  // Draw nucleotide dots with z-depth sizing
+  for (const n of nodes) {
+    // Strand A dot
+    const sizeA = 2.5 + 2 * ((n.zA + 1) / 2);
+    const alphaA = 0.3 + 0.55 * ((n.zA + 1) / 2);
+    ctx.beginPath();
+    ctx.arc(n.xA, n.y, sizeA, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(95,158,114,${alphaA.toFixed(2)})`;
+    ctx.fill();
+
+    // Strand B dot
+    const sizeB = 2.5 + 2 * ((n.zB + 1) / 2);
+    const alphaB = 0.3 + 0.55 * ((n.zB + 1) / 2);
+    ctx.beginPath();
+    ctx.arc(n.xB, n.y, sizeB, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(163,217,177,${alphaB.toFixed(2)})`;
+    ctx.fill();
+
+    // Colored base pair ends (A-T, G-C colors)
+    const baseColors = ['rgba(255,183,77,0.7)','rgba(100,200,150,0.7)','rgba(120,180,255,0.7)','rgba(255,120,140,0.7)'];
+    const bc = baseColors[n.i % 4];
+    if (n.zA > 0.3) {
+      ctx.beginPath();
+      ctx.arc(n.xA, n.y, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = bc;
+      ctx.fill();
+    }
+    if (n.zB > 0.3) {
+      ctx.beginPath();
+      ctx.arc(n.xB, n.y, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = bc;
+      ctx.fill();
+    }
+  }
+
+  requestAnimationFrame(drawDNA);
+}
+drawDNA();
+
+// ══════════════════════════════════════════
+//  FLOATING LEAVES
+// ══════════════════════════════════════════
+const bgCanvas = document.getElementById('bio-canvas');
+const leafColors = ['#3a7d54','#2e6b3e','#52a870','#a3d9b1','#5f9e72'];
+const leafShapes = [
+  'M10 2 C14 0, 22 4, 20 12 C18 20, 10 22, 6 18 C2 14, 6 4, 10 2Z',
+  'M12 1 C18 1, 24 8, 20 16 C16 24, 6 22, 4 14 C2 6, 6 1, 12 1Z',
+  'M8 0 C16 0, 20 6, 18 14 C16 22, 4 20, 2 12 C0 4, 2 0, 8 0Z'
+];
+for (let i = 0; i < 10; i++) {
+  const leaf = document.createElement('div');
+  leaf.className = 'leaf';
+  const size  = 16 + Math.random() * 18;
+  const color = leafColors[Math.floor(Math.random() * leafColors.length)];
+  const shape = leafShapes[Math.floor(Math.random() * leafShapes.length)];
+  const dur   = 12 + Math.random() * 16;
+  const delay = Math.random() * -22;
+  const left  = 3 + Math.random() * 80;
+  leaf.style.cssText = `left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s;`;
+  leaf.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" opacity="0.4"><path d="${shape}"/></svg>`;
+  bgCanvas.appendChild(leaf);
+}
+
+// ══════════════════════════════════════════
+//  FIREFLIES
+// ══════════════════════════════════════════
+for (let i = 0; i < 20; i++) {
+  const ff = document.createElement('div');
+  ff.className = 'firefly';
+  ff.style.cssText = `left:${Math.random()*88}%;top:${Math.random()*100}%;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*-6}s;`;
+  bgCanvas.appendChild(ff);
+}
+
+// ══════════════════════════════════════════
+//  TINY FLOATING FLOWERS
+// ══════════════════════════════════════════
+const petalSets = ['#f9a8d4','#fcd34d','#a3d9b1','#c4b5fd','#86efac'];
+for (let i = 0; i < 6; i++) {
+  const fl  = document.createElement('div');
+  const x   = 5 + Math.random() * 75;
+  const y   = 5 + Math.random() * 88;
+  const dur = 5 + Math.random() * 5;
+  const dly = Math.random() * -8;
+  const sz  = 14 + Math.random() * 10;
+  const pc  = petalSets[i % petalSets.length];
+  fl.style.cssText = `position:absolute;left:${x}%;top:${y}%;animation:cellDrift ${dur}s ease-in-out ${dly}s infinite;opacity:0.35;`;
+  fl.innerHTML = `<svg width="${sz}" height="${sz}" viewBox="0 0 20 20">
+    <circle cx="10" cy="4"  r="2.8" fill="${pc}"/>
+    <circle cx="16" cy="8"  r="2.8" fill="${pc}"/>
+    <circle cx="16" cy="14" r="2.8" fill="${pc}"/>
+    <circle cx="10" cy="18" r="2.8" fill="${pc}"/>
+    <circle cx="4"  cy="14" r="2.8" fill="${pc}"/>
+    <circle cx="4"  cy="8"  r="2.8" fill="${pc}"/>
+    <circle cx="10" cy="10" r="3.5" fill="#fde68a"/>
+  </svg>`;
+  bgCanvas.appendChild(fl);
+}
+
+// ══════════════════════════════════════════
+//  ACTIVE NAV ON SCROLL
+// ══════════════════════════════════════════
+const sections = document.querySelectorAll('section[id]');
+const links    = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  links.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+}, { passive: true });
+</script>
+</body>
 </html>
-
-
